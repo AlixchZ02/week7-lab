@@ -1,23 +1,26 @@
 import unittest
-from Employee import Employee, EmployeeManagementSystem
+from Employee import EmployeeManagementSystem
 
 class TestEmployeeManagementSystem(unittest.TestCase):
     def setUp(self):
-        self.system = EmployeeManagementSystem()
+        self.emp_sys = EmployeeManagementSystem()
 
-    def test_create_employee(self):
-        self.system.create_employee("Alice", 30, 1, "HR")
-        self.assertEqual(len(self.system.employees), 1)
+    def test_add_employee(self):
+        self.emp_sys.add_employee("John Doe", 30, 1, "Engineering")
+        self.assertEqual(len(self.emp_sys.employees), 1)
 
     def test_get_employee_by_id(self):
-        self.system.create_employee("Bob", 35, 2, "Engineering")
-        employee = self.system.get_employee_by_id(2)
-        self.assertEqual(employee.name, "Bob")
+        self.emp_sys.add_employee("John Doe", 30, 1, "Engineering")
+        employee = self.emp_sys.get_employee_by_id(1)
+        self.assertIsNotNone(employee)
+        self.assertEqual(employee.name, "John Doe")
 
     def test_delete_employee_by_id(self):
-        self.system.create_employee("Charlie", 25, 3, "Marketing")
-        self.system.delete_employee_by_id(3)
-        self.assertEqual(len(self.system.employees), 0)
+        self.emp_sys.add_employee("John Doe", 30, 1, "Engineering")
+        self.assertTrue(self.emp_sys.delete_employee_by_id(1))
+        self.assertEqual(len(self.emp_sys.employees), 0)
+        self.assertFalse(self.emp_sys.delete_employee_by_id(1))
 
-if _name_ == "_main_":
+if __name__ == "__main__":
     unittest.main()
+
